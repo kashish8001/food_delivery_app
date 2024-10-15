@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyProfile extends StatelessWidget {
-  int currentIndex = 0;
+  // int currentIndex = 0;
 
   MyProfile({super.key});
 

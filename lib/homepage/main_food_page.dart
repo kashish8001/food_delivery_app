@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Bot/recommendation_bot.dart';
 
 import '../cart.dart';
 import '../profile/profile.dart';
@@ -86,6 +87,12 @@ class _MainFoodPageState extends State<MainFoodPage> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MyCart()),
+            );
+          }
+          if(index==2){
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RecommendationBot(userPreferences: userPreferences)),
             );
           }
         },
@@ -409,11 +416,11 @@ class RestaurantCard extends StatelessWidget {
                     color: Colors.black.withOpacity(0.6),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text(
-                    '$dishName • $price',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
+                  // child: Text(
+                  //   '$dishName • $price',
+                  //   style: TextStyle(
+                  //       color: Colors.white, fontWeight: FontWeight.bold),
+                  // ),
                 ),
               ),
             ],

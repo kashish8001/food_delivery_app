@@ -6,6 +6,7 @@ import 'cart.dart';
 import 'homepage/main_food_page.dart';
 import 'register.dart';
 import 'package:food_delivery_app/profile/profile.dart';
+import 'package:food_delivery_app/Bot/recommendation_bot.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -18,8 +19,10 @@ void main() {
       'profile': (context)=>MyProfile(),
       'cart': (context)=> MyCart(),
       '/user':(context)=> Profile_Screen2(),
-      '/orders':(context)=> OrderScreen()
+      '/orders':(context)=> OrderScreen(),
+      'recommendation_bot':(context)=>RecommendationBot(userPreferences: userPreferences)
     },
   ));
 }
+
 
