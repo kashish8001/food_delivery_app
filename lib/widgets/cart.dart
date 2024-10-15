@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/widgets/CartBottomNavBar.dart';
+import 'package:food_delivery_app/CartBottomNavBar.dart';
 import 'package:flutter/cupertino.dart'; // For CupertinoIcons
-// import 'package:food_delivery_app/widgets/drawer_widget.dart'; // Assuming you have DrawerWidget
+import 'package:food_delivery_app/widgets/drawer_widget.dart'; // Assuming you have DrawerWidget
 import 'package:food_delivery_app/widgets/AppBarWidget.dart'; // Assuming you have AppBarWidget
+
+class CartItem {
+  String image;
+  String title;
+  String subtitle;
+  int price;
+  int quantity;
+
+  CartItem({required this.image, required this.title, required this.subtitle, required this.price, required this.quantity});
+}
 
 class MyCart extends StatefulWidget {
   const MyCart({super.key});
@@ -12,6 +22,20 @@ class MyCart extends StatefulWidget {
 }
 
 class _MyCartState extends State<MyCart> {
+  // List of Cart items
+  List<CartItem> cartItems = [
+    CartItem(image: "assets/image1.jpg", title: "Hot Pizza", subtitle: "Taste Our Hot Pizza", price: 200, quantity: 2),
+    CartItem(image: "assets/image2.webp", title: "Hot Burger", subtitle: "Taste Our Hot Burger", price: 90, quantity: 1),
+    CartItem(image: "assets/image3.jpg", title: "Cold Drink", subtitle: "Taste Our Cold Drink", price: 50, quantity: 1),
+  ];
+
+  // Function to calculate total price
+  int getTotalPrice() {
+    int subTotal = cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+    int deliveryCharge = 60;
+    return subTotal + deliveryCharge;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +54,7 @@ class _MyCartState extends State<MyCart> {
                 ),
               ),
               // List of Cart Items
-              _buildCartItem("assets/cart1.jpg", "Hot Pizza", "Taste Our Hot Pizza", 200, 2),
-              _buildCartItem("assets/cart2.jpg", "Hot Burger", "Taste Our Hot Burger", 90, 1),
-              _buildCartItem("assets/cart3.jpg", "Cold Drink", "Taste Our Cold Drink", 50, 1),
+              ...cartItems.map((item) => _buildCartItem(item)).toList(),
 
               const SizedBox(height: 30),
 
@@ -42,12 +64,13 @@ class _MyCartState extends State<MyCart> {
           ),
         ),
       ),
-      bottomNavigationBar: CartBottomNavBar(), // Assuming you have a custom CartBottomNavBar
+      drawer: DrawerWidget(), // Assuming you have a custom DrawerWidget
+      bottomNavigationBar: CartBottomNavBar(totalAmount: getTotalPrice()), // Assuming you have a custom CartBottomNavBar
     );
   }
 
   // Widget to build a single cart item
-  Widget _buildCartItem(String image, String title, String subtitle, int price, int quantity) {
+  Widget _buildCartItem(CartItem item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 9),
       child: Container(
@@ -69,7 +92,7 @@ class _MyCartState extends State<MyCart> {
           children: [
             Container(
               alignment: Alignment.center,
-              child: Image.asset(image, height: 80, width: 150, fit: BoxFit.cover),
+              child: Image.asset(item.image, height: 80, width: 150, fit: BoxFit.cover),
             ),
             Expanded(
               child: Padding(
@@ -79,22 +102,22 @@ class _MyCartState extends State<MyCart> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      title,
+                      item.title,
                       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      subtitle,
+                      item.subtitle,
                       style: const TextStyle(fontSize: 15, color: Colors.grey),
                     ),
                     Text(
-                      "₹$price",
+                      "₹${item.price * item.quantity}",
                       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
                     ),
                   ],
                 ),
               ),
             ),
-            _buildQuantityControl(quantity),
+            _buildQuantityControl(item),
           ],
         ),
       ),
@@ -102,7 +125,7 @@ class _MyCartState extends State<MyCart> {
   }
 
   // Widget for quantity control (add/remove)
-  Widget _buildQuantityControl(int quantity) {
+  Widget _buildQuantityControl(CartItem item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Container(
@@ -114,16 +137,32 @@ class _MyCartState extends State<MyCart> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Icon(CupertinoIcons.minus, color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (item.quantity > 1) {
+                    item.quantity--;
+                  }
+                });
+              },
+              child: const Icon(CupertinoIcons.minus, color: Colors.white),
+            ),
             Text(
-              "$quantity",
+              "${item.quantity}",
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            const Icon(CupertinoIcons.plus, color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  item.quantity++;
+                });
+              },
+              child: const Icon(CupertinoIcons.plus, color: Colors.white),
+            ),
           ],
         ),
       ),
@@ -132,6 +171,11 @@ class _MyCartState extends State<MyCart> {
 
   // Widget to build the summary section
   Widget _buildSummarySection() {
+    int totalItems = cartItems.fold(0, (sum, item) => sum + item.quantity);
+    int subTotal = cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+    int deliveryCharge = 60;
+    int total = subTotal + deliveryCharge;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -150,13 +194,13 @@ class _MyCartState extends State<MyCart> {
         ),
         child: Column(
           children: [
-            _buildSummaryRow("Items:", "4"),
+            _buildSummaryRow("Items:", "$totalItems"),
             const Divider(color: Colors.black),
-            _buildSummaryRow("Sub-Total:", "₹340"),
+            _buildSummaryRow("Sub-Total:", "₹$subTotal"),
             const Divider(color: Colors.black),
-            _buildSummaryRow("Delivery Charge:", "₹60"),
+            _buildSummaryRow("Delivery Charge:", "₹$deliveryCharge"),
             const Divider(color: Colors.black),
-            _buildSummaryRow("Total:", "₹400", isTotal: true),
+            _buildSummaryRow("Total:", "₹$total", isTotal: true),
           ],
         ),
       ),
@@ -190,4 +234,3 @@ class _MyCartState extends State<MyCart> {
     );
   }
 }
-

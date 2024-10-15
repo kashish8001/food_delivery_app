@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../cart.dart';
+import '../widgets/cart.dart';
 import '../profile/profile.dart';
 import '../restaurant/all_restaurants.dart';
 
