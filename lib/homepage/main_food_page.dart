@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Bot/recommendation_bot.dart';
 
+
+import '../Bot/chatBot.dart';
 import '../widgets/cart.dart';
 import '../profile/profile.dart';
 import '../restaurant/all_restaurants.dart';
@@ -89,12 +90,6 @@ class _MainFoodPageState extends State<MainFoodPage> {
               MaterialPageRoute(builder: (context) => MyCart()),
             );
           }
-          if(index==2){
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RecommendationBot(userPreferences: userPreferences)),
-            );
-          }
         },
         items: const [
           BottomNavigationBarItem(
@@ -139,8 +134,8 @@ class _MainFoodPageState extends State<MainFoodPage> {
       ); // Show the Home screen when "Home" is selected
     } else if (currentIndex == 2) {
       return MyProfile(); // Show the Profile screen when "Profile" is selected
-    // } else if (currentIndex == 3) {
-    //   return ChatbotScreen(); // Show the Chatbot screen when "Chatbot" is selected
+    } else if (currentIndex == 3) {
+      return BotpressChat(botUrl: 'https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/10/15/17/20241015170123-2JIB60O6.json',); // Show the Chatbot screen when "Chatbot" is selected
     } else {
       return SafeArea(
         child: SingleChildScrollView(

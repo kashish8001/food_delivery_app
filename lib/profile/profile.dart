@@ -31,7 +31,7 @@ class MyProfile extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, 'main_food_page');
           },
         ),
         title: Text('Profile'),

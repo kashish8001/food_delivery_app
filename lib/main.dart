@@ -6,12 +6,12 @@ import 'widgets/cart.dart';
 import 'homepage/main_food_page.dart';
 import 'register.dart';
 import 'package:food_delivery_app/profile/profile.dart';
-import 'package:food_delivery_app/Bot/recommendation_bot.dart';
+import 'package:food_delivery_app/Bot/chatBot.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: 'login',
+    initialRoute: 'main_food_page',
     routes: {
       'main_food_page' : (context)=> MainFoodPage(),
       'login' : (context)=> Mylogin(),
@@ -20,7 +20,7 @@ void main() {
       'cart': (context)=> MyCart(),
       '/user':(context)=> Profile_Screen2(),
       '/orders':(context)=> OrderScreen(),
-      'recommendation_bot':(context)=>RecommendationBot(userPreferences: userPreferences)
+     '/chatbot':(context)=> BotpressChat(botUrl: 'https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/10/15/17/20241015170123-2JIB60O6.json',)
     },
   ));
 }
