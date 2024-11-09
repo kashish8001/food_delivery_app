@@ -319,7 +319,6 @@ class _MainFoodPageState extends State<MainFoodPage> {
     },
     // Add more restaurants here
   ];
-
   Widget _buildAdditionalContent() {
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -355,6 +354,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
       ),
     );
   }
+
 }
 
 class RestaurantCard extends StatelessWidget {

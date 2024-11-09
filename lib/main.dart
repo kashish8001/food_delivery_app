@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/login.dart';
 import 'package:food_delivery_app/profile/orders.dart';
+import 'package:food_delivery_app/profile/premium.dart';
 import 'package:food_delivery_app/profile/user.dart';
 import 'widgets/cart.dart';
 import 'homepage/main_food_page.dart';
@@ -10,11 +11,13 @@ import 'splash_screen.dart';
 import 'package:food_delivery_app/profile/profile.dart';
 import 'package:food_delivery_app/Bot/chatBot.dart';
 import 'profile/faq.dart';
+import 'profile/premium.dart';
 import 'profile/feedback.dart';
 import 'profile/eat_with_friends.dart';
 import 'profile/subscribe_&_save.dart';
-
-
+import 'profile/address.dart';
+import 'profile/refund.dart';
+import 'profile/payment_mode.dart';
 
 
 void main() {
@@ -30,6 +33,10 @@ void main() {
       'profile': (context)=>MyProfile(),
       '/faq': (context)=> FAQPage(),
       '/feedback': (context)=> FeedbackPage(),
+      '/refund': (context)=> RefundStatusScreen(),
+      '/payment_mode': (context)=> PaymentModesScreen(),
+      '/premium' : (context)=> PremiumScreen(),
+      '/address' : (context)=> AddressScreen(),
       '/eat_with_friends': (context)=> EatWithFriendsPage(),
       '/subscribe_&_save': (context)=> SubscribeAndSavePage(),
       'cart': (context)=> MyCart(),
