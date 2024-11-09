@@ -4,7 +4,7 @@ class CartBottomNavBar extends StatelessWidget {
   final int totalAmount;
 
   // Accept the total price as a parameter
-  CartBottomNavBar({required this.totalAmount});
+  const CartBottomNavBar({super.key, required this.totalAmount});
 
   @override
   Widget build(BuildContext context) {

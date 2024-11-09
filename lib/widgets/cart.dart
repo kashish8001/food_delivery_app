@@ -39,7 +39,7 @@ class _MyCartState extends State<MyCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(), // Assuming you have a custom AppBarWidget
+      appBar: const AppBarWidget(), // Assuming you have a custom AppBarWidget
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -54,7 +54,7 @@ class _MyCartState extends State<MyCart> {
                 ),
               ),
               // List of Cart Items
-              ...cartItems.map((item) => _buildCartItem(item)).toList(),
+              ...cartItems.map((item) => _buildCartItem(item)),
 
               const SizedBox(height: 30),
 
@@ -64,7 +64,7 @@ class _MyCartState extends State<MyCart> {
           ),
         ),
       ),
-      drawer: DrawerWidget(), // Assuming you have a custom DrawerWidget
+      drawer: const DrawerWidget(), // Assuming you have a custom DrawerWidget
       bottomNavigationBar: CartBottomNavBar(totalAmount: getTotalPrice()), // Assuming you have a custom CartBottomNavBar
     );
   }

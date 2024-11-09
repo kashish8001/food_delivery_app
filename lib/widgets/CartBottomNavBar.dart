@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CartBottomNavBar extends StatelessWidget {
+  const CartBottomNavBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -11,8 +13,8 @@ class CartBottomNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Total amount section
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Text(
                   "Total :",
                   style: TextStyle(
