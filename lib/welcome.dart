@@ -22,10 +22,10 @@ class MyWelcome extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Foodie",
+                    "SNACKIT",
                     style: TextStyle(
                       fontSize: 48,
-                      color: Colors.red,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

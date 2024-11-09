@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -67,11 +66,11 @@ class MyProfile extends StatelessWidget {
               ),
               ProfileMenuItem(title: 'Payment & Refunds', onTap: () {}),
               ProfileMenuItem(title: 'Address', onTap: () {}),
-              ProfileMenuItem(title: 'Eat with Friends', onTap: () {}),
-              ProfileMenuItem(title: 'Subscribe & Save', onTap: () {}),
+              ProfileMenuItem(title: 'Eat with Friends', onTap: () {Navigator.pushNamed(context, '/eat_with_friends');}),
+              ProfileMenuItem(title: 'Subscribe & Save', onTap: () {Navigator.pushNamed(context, '/subscribe_&_save');}),
               ProfileMenuItem(title: 'Premium', onTap: () {}),
-              ProfileMenuItem(title: 'Help Desk', onTap: () {}),
-              ProfileMenuItem(title: 'Feedback', onTap: () {}),
+              ProfileMenuItem(title: 'FAQs', onTap: () {Navigator.pushNamed(context, '/faq');}),
+              ProfileMenuItem(title: 'Feedback', onTap: () {Navigator.pushNamed(context, '/feedback');}),
               ProfileMenuItem(title: 'Log Out', onTap: () {Navigator.pushNamed(context, 'login');}),
             ],
           ),

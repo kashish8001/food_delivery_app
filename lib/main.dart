@@ -9,6 +9,13 @@ import 'welcome.dart';
 import 'splash_screen.dart';
 import 'package:food_delivery_app/profile/profile.dart';
 import 'package:food_delivery_app/Bot/chatBot.dart';
+import 'profile/faq.dart';
+import 'profile/feedback.dart';
+import 'profile/eat_with_friends.dart';
+import 'profile/subscribe_&_save.dart';
+
+
+
 
 void main() {
   runApp(MaterialApp(
@@ -21,6 +28,10 @@ void main() {
       'welcome' : (context)=> MyWelcome(),
       'register' : (context)=> MyRegister(),
       'profile': (context)=>MyProfile(),
+      '/faq': (context)=> FAQPage(),
+      '/feedback': (context)=> FeedbackPage(),
+      '/eat_with_friends': (context)=> EatWithFriendsPage(),
+      '/subscribe_&_save': (context)=> SubscribeAndSavePage(),
       'cart': (context)=> MyCart(),
       '/user':(context)=> Profile_Screen2(),
       '/orders':(context)=> OrderScreen(),
