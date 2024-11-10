@@ -1,10 +1,134 @@
 import 'package:flutter/material.dart';
 
-
+import 'RestaurantScreen.dart';
 import '../Bot/chatBot.dart';
 import '../widgets/cart.dart';
 import '../profile/profile.dart';
 import '../restaurant/all_restaurants.dart';
+class CustomSearchDelegate extends SearchDelegate {
+  final List<Map<String, dynamic>> foodCategories = [
+    {
+      "name": "Pizza",
+      "image": "assets/image1.jpg",
+      "rating": 4.5,
+      "distance": "1.2 km",
+      "time": "30 min",
+      "restaurant": "Pizza Hut"
+    },
+    {
+      "name": "Burger",
+      "image": "assets/image2.webp",
+      "rating": 4.2,
+      "distance": "2.0 km",
+      "time": "20 min",
+      "restaurant": "Burger King"
+    },
+    {
+      "name": "Sushi",
+      "image": "assets/image3.jpg",
+      "rating": 4.8,
+      "distance": "3.5 km",
+      "time": "45 min",
+      "restaurant": "Sushi World"
+    },
+    {
+      "name": "Pasta",
+      "image": "assets/image4.jpg",
+      "rating": 4.3,
+      "distance": "1.8 km",
+      "time": "35 min",
+      "restaurant": "Pasta House"
+    },
+    {
+      "name": "Desserts",
+      "image": "assets/image5.jpg",
+      "rating": 4.9,
+      "distance": "2.3 km",
+      "time": "25 min",
+      "restaurant": "Sweet Treats"
+    },
+    {
+      "name": "Drinks",
+      "image": "assets/image6.jpg",
+      "rating": 4.0,
+      "distance": "0.8 km",
+      "time": "15 min",
+      "restaurant": "Juice Bar"
+    },// Add more categories if needed
+  ];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // Clear search query
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // Back button
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final results = foodCategories
+        .where((category) => category['name'].toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final category = results[index];
+        return ListTile(
+          title: Text(category['name']),
+          subtitle: Text(category['restaurant']),
+          leading: Image.asset(category['image']),
+          onTap: () {
+            // Handle item tap (e.g., navigate to a details page)
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestions = foodCategories
+        .where((category) => category['name'].toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return ListView.builder(
+      itemCount: suggestions.length,
+      itemBuilder: (context, index) {
+        final category = suggestions[index];
+        return ListTile(
+          title: Text(category['name']),
+          subtitle: Text(category['restaurant']),
+          leading: Image.asset(category['image']),
+          onTap: () {
+            // Handle suggestion tap
+            query = category['name'];
+            showResults(context);
+          },
+        );
+      },
+    );
+  }
+}
+
+
 
 class MainFoodPage extends StatefulWidget {
   const MainFoodPage({super.key});
@@ -116,6 +240,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
       ),
       body: _getBody(), // Call a method that returns the current screen's body based on currentIndex
     );
+
   }
 
   Widget _getBody() {
@@ -162,23 +287,32 @@ class _MainFoodPageState extends State<MainFoodPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Country", style: TextStyle(color: Colors.grey)),
-              Text("City", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("India", style: TextStyle(color: Colors.grey)),
+              Text("Gandhinagar", style: TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
-          Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.blue,
+          GestureDetector(
+            onTap: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(),
+              );
+            },
+            child: Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.blue,
+              ),
+              child: Icon(Icons.search, color: Colors.white),
             ),
-            child: Icon(Icons.search, color: Colors.white),
-          )
+          ),
         ],
       ),
     );
   }
+
 
   Widget _buildFoodCategoriesSlider() {
     return Column(
@@ -319,6 +453,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
     },
     // Add more restaurants here
   ];
+
   Widget _buildAdditionalContent() {
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -355,9 +490,11 @@ class _MainFoodPageState extends State<MainFoodPage> {
     );
   }
 
+
+
 }
 
-class RestaurantCard extends StatelessWidget {
+class RestaurantCard extends StatefulWidget {
   final String dishName;
   final String price;
   final String deliveryTime;
@@ -384,94 +521,150 @@ class RestaurantCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _RestaurantCardState createState() => _RestaurantCardState();
+}
+
+class _RestaurantCardState extends State<RestaurantCard> {
+  // Boolean to track if the item is liked or not
+  bool isLiked = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.only(bottom: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-                child: Image.asset(
-                  image, // Use the image path here
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 10,
-                left: 10,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  // child: Text(
-                  //   '$dishName • $price',
-                  //   style: TextStyle(
-                  //       color: Colors.white, fontWeight: FontWeight.bold),
-                  // ),
-                ),
-              ),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RestaurantDetailScreen(
+              restaurantName: widget.restaurantName,
+              image: widget.image,
+              rating: widget.rating,
+              cuisineTypes: widget.cuisineTypes,
+              priceForOne: widget.priceForOne,
+              deliveryTime: widget.deliveryTime,
+              distance: widget.distance,
+              offer: widget.offer,
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        );
+      },
+      child: Container( // Added Container to provide constraints
+        width: double.infinity,
+        margin: EdgeInsets.only(bottom: 15),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min, // Added to prevent infinite height
+            children: [
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                    child: Image.asset(
+                      widget.image,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('$deliveryTime • $distance',
-                        style: TextStyle(color: Colors.grey)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${widget.deliveryTime} • ${widget.distance}',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                isLiked ? Icons.favorite : Icons.favorite_border,
+                                size: 20,
+                                color: isLiked ? Colors.red : Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isLiked = !isLiked;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10),
+                            Icon(Icons.share, size: 20),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      widget.restaurantName,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      widget.cuisineTypes.join(' • ') + ' • ${widget.priceForOne}',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(Icons.favorite_border, size: 20),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            '${widget.rating} ★',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                         SizedBox(width: 10),
-                        Icon(Icons.share, size: 20),
+                        Icon(Icons.local_offer, color: Colors.blue, size: 16),
+                        SizedBox(width: 4),
+                        Expanded( // Added to prevent text overflow
+                          child: Text(
+                            widget.offer,
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
-                Text(restaurantName,
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Text(cuisineTypes.join(' • ') + ' • $priceForOne',
-                    style: TextStyle(color: Colors.grey)),
-                SizedBox(height: 8),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text('$rating ★',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(width: 10),
-                    Icon(Icons.local_offer, color: Colors.blue, size: 16),
-                    SizedBox(width: 4),
-                    Text(offer,
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
+
+
+
