@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/widgets/cart.dart';
+
 import 'package:food_delivery_app/widgets/end_screen.dart';
 
 class OrderSuccessScreen extends StatelessWidget {

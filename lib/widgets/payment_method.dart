@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/widgets/AppBarWidget.dart';
+
 import 'package:food_delivery_app/widgets/shipping_address.dart';
 
 class PaymentMethod extends StatefulWidget {

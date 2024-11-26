@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/widgets/cart.dart';
-// Add this import
-import 'package:food_delivery_app/screens/main_food_page.dart';
+
+
 
 import '../homepage/main_food_page.dart'; // Adjust the import path based on your project structure
 
