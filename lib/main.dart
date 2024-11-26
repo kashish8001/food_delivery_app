@@ -34,7 +34,7 @@ void main() {
       '/faq': (context)=> FAQPage(),
       '/feedback': (context)=> FeedbackPage(),
       '/refund': (context)=> RefundStatusScreen(),
-      '/payment_mode': (context)=> PaymentModesScreen(),
+      '/payment_mode': (context)=> PaymentsScreen(),
       '/premium' : (context)=> PremiumScreen(),
       '/address' : (context)=> AddressScreen(),
       '/eat_with_friends': (context)=> EatWithFriendsPage(),
