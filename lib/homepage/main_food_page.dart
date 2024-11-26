@@ -665,6 +665,3 @@ class _RestaurantCardState extends State<RestaurantCard> {
     );
   }
 }
-
-
-
