@@ -12,7 +12,6 @@ class _AddressScreenState extends State<AddressScreen> {
       'type': 'Home',
       'address': 'Ganesh nagar kesari khera crossing, Krishna Nagar, Alaknanda'
     },
-    // Add more saved addresses here
   ];
 
   final TextEditingController _addressController = TextEditingController();

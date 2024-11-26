@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/CartBottomNavBar.dart';
 import 'package:flutter/cupertino.dart'; // For CupertinoIcons
 import 'package:food_delivery_app/widgets/drawer_widget.dart'; // Assuming you have DrawerWidget
-import 'package:food_delivery_app/widgets/AppBarWidget.dart'; // Assuming you have AppBarWidget
+import 'package:food_delivery_app/widgets/AppBarWidget.dart';
+import 'package:food_delivery_app/widgets/payment_method.dart';
+import 'package:food_delivery_app/widgets/shipping_address.dart'; // Assuming you have AppBarWidget
 
 class CartItem {
   String image;
@@ -30,16 +32,19 @@ class _MyCartState extends State<MyCart> {
   ];
 
   // Function to calculate total price
-  int getTotalPrice() {
-    int subTotal = cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
-    int deliveryCharge = 60;
+  double getTotalPrice() {
+    double subTotal = cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+    double deliveryCharge = 60;
     return subTotal + deliveryCharge;
   }
+
+  // function to pass the values
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(), // Assuming you have a custom AppBarWidget
+      appBar: AppBarWidget(), // Assuming you have a custom AppBarWidget
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -64,8 +69,8 @@ class _MyCartState extends State<MyCart> {
           ),
         ),
       ),
-      drawer: const DrawerWidget(), // Assuming you have a custom DrawerWidget
-      bottomNavigationBar: CartBottomNavBar(totalAmount: getTotalPrice()), // Assuming you have a custom CartBottomNavBar
+        // Assuming you have a custom DrawerWidget
+      // bottomNavigationBar: CartBottomNavBar(totalAmount: getTotalPrice()), // Assuming you have a custom CartBottomNavBar
     );
   }
 
@@ -172,9 +177,9 @@ class _MyCartState extends State<MyCart> {
   // Widget to build the summary section
   Widget _buildSummarySection() {
     int totalItems = cartItems.fold(0, (sum, item) => sum + item.quantity);
-    int subTotal = cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
-    int deliveryCharge = 60;
-    int total = subTotal + deliveryCharge;
+    double subTotal = cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+    double deliveryCharge = 60;
+    double total = subTotal + deliveryCharge;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -201,11 +206,34 @@ class _MyCartState extends State<MyCart> {
             _buildSummaryRow("Delivery Charge:", "₹$deliveryCharge"),
             const Divider(color: Colors.black),
             _buildSummaryRow("Total:", "₹$total", isTotal: true),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                int totalItems = cartItems.fold(0, (sum, item) => sum + item.quantity);
+                double subTotal = cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShippingAddress(
+                      totalitems: totalItems,
+                      subTotal: subTotal,
+                    ),
+                  ),
+                );
+              },
+              child: const Text(
+                "Order Now",
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+
           ],
         ),
       ),
     );
   }
+
 
   // Widget to build each row in the summary section
   Widget _buildSummaryRow(String label, String value, {bool isTotal = false}) {

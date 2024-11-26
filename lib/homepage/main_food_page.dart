@@ -361,7 +361,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
                     children: [
                       ClipRRect(
                         borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(15)),
+                        BorderRadius.vertical(top: Radius.circular(15)),
                         child: Image.asset(
                           category['image'],
                           height: 100,

@@ -3,15 +3,13 @@
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          const UserAccountsDrawerHeader(
+          UserAccountsDrawerHeader(
             accountName: Text("John Doe"),
             accountEmail: Text("johndoe@example.com"),
             currentAccountPicture: CircleAvatar(
@@ -22,43 +20,43 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text("Home"),
+            leading: Icon(Icons.home),
+            title: Text("Home"),
             onTap: () {
               Navigator.of(context).pushReplacementNamed("/home");
             },
           ),
           ListTile(
-            leading: const Icon(Icons.shopping_cart),
-            title: const Text("My Cart"),
+            leading: Icon(Icons.shopping_cart),
+            title: Text("My Cart"),
             onTap: () {
               Navigator.of(context).pushReplacementNamed("/cart");
             },
           ),
           ListTile(
-            leading: const Icon(Icons.history),
-            title: const Text("Order History"),
+            leading: Icon(Icons.history),
+            title: Text("Order History"),
             onTap: () {
               Navigator.of(context).pushReplacementNamed("/history");
             },
           ),
           ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text("Profile"),
+            leading: Icon(Icons.person),
+            title: Text("Profile"),
             onTap: () {
               Navigator.of(context).pushReplacementNamed("/profile");
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text("Settings"),
+            leading: Icon(Icons.settings),
+            title: Text("Settings"),
             onTap: () {
               Navigator.of(context).pushReplacementNamed("/settings");
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text("Logout"),
+            leading: Icon(Icons.logout),
+            title: Text("Logout"),
             onTap: () {
               Navigator.of(context).pushReplacementNamed("/login");
             },

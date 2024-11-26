@@ -3,24 +3,16 @@
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      title: const Text("My Cart"),
+      title: Text("My Cart"),
       backgroundColor: Colors.blue,
       elevation: 0,
       centerTitle: true,
       actions: [
         IconButton(
-          icon: const Icon(Icons.notifications),
+          icon: Icon(Icons.notifications),
           onPressed: () {
             // Handle notification action
           },
@@ -30,5 +22,5 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
