@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'Payment_confirm.dart'; // Ensure this file exists and is properly implemented.
-
 class ShippingAddress extends StatelessWidget {
   ShippingAddress({Key? key, required int totalitems, required double subTotal}) : super(key: key);
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +52,6 @@ class ShippingAddress extends StatelessWidget {
                     //   }
                     //   return null;
                     // },
-
                   ),
                   const SizedBox(height: 25),
                   TextFormField(
@@ -103,12 +98,10 @@ class ShippingAddress extends StatelessWidget {
                     //   return null;
                     // },
                   ),
-
                   const SizedBox(height: 30),
                   InkWell(
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
-
                         Navigator.push(context,MaterialPageRoute(builder: (context)=>PaymentMethod()));
                         // Navigator.pop(
                         //   context,
@@ -127,7 +120,7 @@ class ShippingAddress extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       color: Colors.blue,
                       child: const Text(
-                        "Add Address",
+                        "Confirm Address",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),

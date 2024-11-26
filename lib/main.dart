@@ -26,7 +26,7 @@ import 'profile/payment_mode.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/cart',
+    initialRoute: 'splash_screen',
     routes: {
       'splash_screen' : (context)=> SplashScreen(),
       'main_food_page' : (context)=> MainFoodPage(),
