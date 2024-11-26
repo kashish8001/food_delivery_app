@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/widgets/payment_method.dart';
 
 class EatWithFriendsPage extends StatefulWidget {
   @override
@@ -107,10 +108,13 @@ class _EatWithFriendsPageState extends State<EatWithFriendsPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),  // Blue button
-                onPressed: _placeOrder,
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue), // Blue button
+                onPressed: () {
+                  Navigator.pushNamed(context, '/payment_method'); // Replace 'register' with your desired named route
+                },
                 child: Text("Place Order to All Addresses"),
               ),
+
             ],
           ),
         ),
