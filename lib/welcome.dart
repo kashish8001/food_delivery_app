@@ -7,7 +7,7 @@ class MyWelcome extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/welcome.jpeg'), // Add your background image here
                 fit: BoxFit.cover,
@@ -40,7 +40,7 @@ class MyWelcome extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                     "Craving something delicious? We’re just a tap away!",
+                    "Craving something delicious? We’re just a tap away!",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
@@ -54,7 +54,7 @@ class MyWelcome extends StatelessWidget {
                       minimumSize: Size(double.infinity, 50),
                     ),
                     child: Text("Login",
-                    style:TextStyle(fontSize:25)),
+                        style:TextStyle(fontSize:25)),
                   ),
                   SizedBox(height: 10),
                   OutlinedButton(
@@ -66,7 +66,7 @@ class MyWelcome extends StatelessWidget {
                       minimumSize: Size(double.infinity, 50),
                     ),
                     child: Text(
-                      "Sign up",
+                        "Sign up",
                         style:TextStyle(fontSize:25)
                     ),
                   ),

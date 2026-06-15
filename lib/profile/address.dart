@@ -63,7 +63,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   // Function to delete an address
   void _deleteAddress(int index) {
-    setState(() {
+    setSt ate(() {
       savedAddresses.removeAt(index);
     });
     ScaffoldMessenger.of(context).showSnackBar(

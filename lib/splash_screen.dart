@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF91C4E6), // Set the custom background color
+      backgroundColor: Color(0xFFF9F3D9), // Set the custom background color
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -69,9 +69,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             );
           },
           child: Image.asset(
-            'assets/app_icon.png', // Replace with your logo path
-            width: 200,
-            height: 200,
+            'assets/app_icon_2.png', // Replace with your logo path
+            width: 300,
+            height: 300,
           ),
         ),
       ),

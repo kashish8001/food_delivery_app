@@ -327,4 +327,3 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
     );
   }
 }
-

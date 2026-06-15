@@ -1,9 +1,6 @@
 // import 'package:flutter/material.dart';
-// import 'package:food_delivery_app/widgets/payment_method.dart';
 //
 // class CartBottomNavBar extends StatelessWidget {
-//   const CartBottomNavBar({super.key});
-//
 //   @override
 //   Widget build(BuildContext context) {
 //     return BottomAppBar(
@@ -14,8 +11,8 @@
 //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //           children: [
 //             // Total amount section
-//             const Row(
-//               children: [
+//             Row(
+//               children: const [
 //                 Text(
 //                   "Total :",
 //                   style: TextStyle(
@@ -36,15 +33,10 @@
 //                 ),
 //               ],
 //             ),
-//             // Order button with navigation
+//             // Order button
 //             ElevatedButton(
 //               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     builder: (context) => const PaymentMethod(),
-//                   ),
-//                 );
+//                 // Your order logic here
 //               },
 //               style: ElevatedButton.styleFrom(
 //                 backgroundColor: Colors.blue,
@@ -61,7 +53,7 @@
 //                 style: TextStyle(
 //                   fontSize: 16,
 //                   fontWeight: FontWeight.bold,
-//                   color: Colors.white,
+//                   color: Colors.white
 //                 ),
 //               ),
 //             ),

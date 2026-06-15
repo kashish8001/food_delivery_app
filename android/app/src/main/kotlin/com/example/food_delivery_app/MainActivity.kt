@@ -1,10 +1,5 @@
-package com.example.food_delivery_app // Ensure this matches your app's package name
+package com.example.food_delivery_app
 
-import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity : FlutterActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-}
+class MainActivity: FlutterActivity()

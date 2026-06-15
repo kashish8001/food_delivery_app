@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+
+import '../profile/eat_with_friends.dart';
 import 'Payment_confirm.dart'; // Ensure this file exists and is properly implemented.
+
+
 class ShippingAddress extends StatelessWidget {
   ShippingAddress({Key? key, required int totalitems, required double subTotal}) : super(key: key);
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +58,7 @@ class ShippingAddress extends StatelessWidget {
                     //   }
                     //   return null;
                     // },
+
                   ),
                   const SizedBox(height: 25),
                   TextFormField(
@@ -98,10 +105,12 @@ class ShippingAddress extends StatelessWidget {
                     //   return null;
                     // },
                   ),
+
                   const SizedBox(height: 30),
                   InkWell(
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
+
                         Navigator.push(context,MaterialPageRoute(builder: (context)=>PaymentMethod()));
                         // Navigator.pop(
                         //   context,
@@ -120,11 +129,41 @@ class ShippingAddress extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       color: Colors.blue,
                       child: const Text(
-                        "Confirm Address",
+                        "Add Address",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
+
+                  ),
+                  const SizedBox(height: 30),
+                  InkWell(
+                    onTap: () {
+
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>EatWithFriendsPage()));
+                      // Navigator.pop(
+                      //   context,
+                      //   {
+                      //     "name": _nameController.text,
+                      //     "mobile": _mobileController.text,
+                      //     "address": _addressController.text,
+                      //     "street": _streetController.text,
+                      //     "pinCode": _pinCodeController.text,
+                      //   },
+                      // );
+
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.blue,
+                      child: const Text(
+                        "Eat with Friends",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+
                   ),
                 ],
               ),

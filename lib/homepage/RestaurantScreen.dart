@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+import '../widgets/cart.dart';
+
 class RestaurantDetailScreen extends StatefulWidget {
   final String restaurantName;
   final String image;
@@ -30,7 +33,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
   final List<Map<String, dynamic>> menuItems = [
     {
       "name": "Veg Hakka Noodles",
-      "price": "₹100",
+      "price": 100,
       "description": "Indo-Chinese style noodles with mixed vegetables",
       "isVeg": true,
       "image": "assets/noodles_img.jpg",
@@ -38,7 +41,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
     },
     {
       "name": "Manchurian",
-      "price": "₹120",
+      "price": 120,
       "description": "Crispy vegetable balls in spicy gravy",
       "isVeg": true,
       "image": "assets/Manchurian.jpg",
@@ -46,7 +49,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
     },
     {
       "name": "Fried Rice",
-      "price": "₹90",
+      "price": 90,
       "description": "Chinese style rice with vegetables",
       "isVeg": true,
       "image": "assets/friedRice.jpg",
@@ -57,11 +60,11 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
   Map<String, int> itemCount = {};
   double totalAmount = 0.0;
 
-  void _addItem(String itemName, String price) {
+  void _addItem(String itemName, int price) {
     setState(() {
       itemCount[itemName] = (itemCount[itemName] ?? 0) + 1;
       // Add price to total (removing the ₹ symbol and converting to double)
-      totalAmount += double.parse(price.substring(1));
+      totalAmount += price;
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -78,11 +81,11 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
     );
   }
 
-  void _removeItem(String itemName, String price) {
+  void _removeItem(String itemName, int price) {
     setState(() {
       if (itemCount[itemName] != null && itemCount[itemName]! > 0) {
         itemCount[itemName] = itemCount[itemName]! - 1;
-        totalAmount -= double.parse(price.substring(1));
+        totalAmount -= price;
         if (itemCount[itemName] == 0) {
           itemCount.remove(itemName);
         }
@@ -309,7 +312,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 4),
-                          Text(menuItem['price'] as String),
+                          Text('Rs ${menuItem['price']}'),
                           const SizedBox(height: 4),
                           Text(
                             menuItem['description'] as String,
@@ -319,51 +322,60 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                       ),
                       trailing: count == 0
                           ? ElevatedButton(
-                              onPressed: () =>
-                                  _addItem(itemName, menuItem['price']),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text('ADD'),
-                                  Icon(Icons.add, size: 16),
-                                ],
-                              ),
-                            )
+                        onPressed: () {
+                          _addItem(itemName, menuItem['price']);
+                          CartItem newCartItem = CartItem(
+                            image: menuItem['image'] as String,
+                            title: menuItem['name'] as String,
+                            price: menuItem['price'],
+                            quantity: 1,
+                          );
+                          cartItems.add(newCartItem);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 16),
+
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('ADD'),
+                            Icon(Icons.add, size: 16),
+                          ],
+                        ),
+                      )
                           : Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.green),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.remove,
-                                        color: Colors.green),
-                                    onPressed: () => _removeItem(
-                                        itemName, menuItem['price']),
-                                  ),
-                                  Text(
-                                    count.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.add,
-                                        color: Colors.green),
-                                    onPressed: () =>
-                                        _addItem(itemName, menuItem['price']),
-                                  ),
-                                ],
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.green),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove,
+                                  color: Colors.green),
+                              onPressed: () => _removeItem(
+                                  itemName, menuItem['price']),
+                            ),
+                            Text(
+                              count.toString(),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            IconButton(
+                              icon: const Icon(Icons.add,
+                                  color: Colors.green),
+                              onPressed: () =>
+                                  _addItem(itemName, menuItem['price']),
+                            ),
+                          ],
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -375,56 +387,56 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
       bottomNavigationBar: itemCount.isEmpty
           ? null
           : Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${itemCount.values.reduce((a, b) => a + b)} items',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '₹${totalAmount.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Implement view cart functionality
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 16,
-                      ),
-                    ),
-                    child: const Text('View Cart'),
-                  ),
-                ],
-              ),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 5,
             ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${itemCount.values.reduce((a, b) => a + b)} items',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '₹${totalAmount.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/cart');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
+              ),
+              child: const Text('View Cart'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
